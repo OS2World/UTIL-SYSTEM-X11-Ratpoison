@@ -1,0 +1,1250 @@
+This is ratpoison.info, produced by makeinfo version 4.3 from
+ratpoison.texi.
+
+INFO-DIR-SECTION X11
+START-INFO-DIR-ENTRY
+* ratpoison: (ratpoison).       Say good-bye to the rodent
+END-INFO-DIR-ENTRY
+
+   This is the ratpoison user manual.
+
+   Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006 Shawn Betts
+
+   The ratpoison user manual is free documentation; permission is
+granted to copy, distribute and/or modify this document under the terms
+of either:
+
+   a) the GNU General Public License as published by the Free Software
+Foundation; either version 2 of the License, or (at your option) any
+later version, or
+
+   b) the GNU Free Documentation License, version 1.2 or any later
+version published by the Free Software Foundation; with no Invariant
+Sections, no Front-Cover Texts, and no Back-Cover Texts.
+
+   The ratpoison manual is distributed in the hope that it will be
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License or GNU Free Documentation License for more
+details.
+
+   A copy of the FDL is included in the section entitled "GNU Free
+Documentation License".  You should have received a copy of the GNU
+General Public License along with this software; see the file COPYING.
+If not, write to the Free Software Foundation, Inc., 51 Franklin St,
+Fifth Floor, Boston, MA 02110-1301, USA.
+
+   If you choose to allow use of your version of this content only
+under the terms of one of the licenses, indicate your decision by
+deleting the notice of the other license. If you do not delete any of
+those, a recipient may use your version of this file unter the terms of
+either the GNU FDL or the GNU GPL.
+
+   The ratpoison manual is distributed in the hope that it will be
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License or GNU Free Documentation License for more
+details.
+
+
+File: ratpoison.info,  Node: Top,  Next: GNU Free Documentation License,  Prev: (dir),  Up: (dir)
+
+   This document explains how to use ratpoison 1.4.3.
+
+* Menu:
+
+* GNU Free Documentation License::
+* About::                       What Is Ratpoison?
+* Contacting::                  How Do I Contact The Ratpoison Developers?
+* Concepts::                    Window Manipulation Concepts
+* General Use::                 How Does This Thing Work??
+* Windows::                     Navigating The Windows
+* Groups::                      Grouping Windows Together
+* Frames::                      Dividing The Screen
+* Multiple Monitors::           What To Do With All Your Computer Junk
+* Keystrokes::                  Key Commands And Functionality
+* Hooks::                       Attaching Scripts To Ratpoison Events
+* The Status Bar::              Ratpoison's Input/Output Area
+* Using Other Window Managers::  Return To Evil
+* Other Commands::              Miscellaneous Commands
+* Input::                       Typing Text Into Ratpoison
+* Command Line Arguments::      ratpoison Command-Line Actions
+* Startup file::                They Threatened Me...With Violence!
+* Command Index::               Index
+
+ --- The Detailed Node Listing ---
+
+Windows
+
+* Manipulating Windows::
+* Window Classes::
+* Unmanaged Windows::
+* Rudeness::
+
+Frames
+
+* Splitting Frames::
+* Resizing Frames::
+* Frame Navigation Commands::
+* Saving and Restoring Frame Sets::
+* Frame Numbering::
+* Dedicated Frames::
+
+Keystrokes
+
+* Key Maps::
+* Default Key Bindings::
+
+
+File: ratpoison.info,  Node: GNU Free Documentation License,  Next: About,  Prev: Top,  Up: Top
+
+GNU Free Documentation License
+==============================
+
+                      Version 1.2, November 2002
+     Copyright (C) 2000,2001,2002 Free Software Foundation, Inc.
+     51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+     
+     Everyone is permitted to copy and distribute verbatim copies
+     of this license document, but changing it is not allowed.
+
+  0. PREAMBLE
+
+     The purpose of this License is to make a manual, textbook, or other
+     functional and useful document "free" in the sense of freedom: to
+     assure everyone the effective freedom to copy and redistribute it,
+     with or without modifying it, either commercially or
+     noncommercially.  Secondarily, this License preserves for the
+     author and publisher a way to get credit for their work, while not
+     being considered responsible for modifications made by others.
+
+     This License is a kind of "copyleft", which means that derivative
+     works of the document must themselves be free in the same sense.
+     It complements the GNU General Public License, which is a copyleft
+     license designed for free software.
+
+     We have designed this License in order to use it for manuals for
+     free software, because free software needs free documentation: a
+     free program should come with manuals providing the same freedoms
+     that the software does.  But this License is not limited to
+     software manuals; it can be used for any textual work, regardless
+     of subject matter or whether it is published as a printed book.
+     We recommend this License principally for works whose purpose is
+     instruction or reference.
+
+  1. APPLICABILITY AND DEFINITIONS
+
+     This License applies to any manual or other work, in any medium,
+     that contains a notice placed by the copyright holder saying it
+     can be distributed under the terms of this License.  Such a notice
+     grants a world-wide, royalty-free license, unlimited in duration,
+     to use that work under the conditions stated herein.  The
+     "Document", below, refers to any such manual or work.  Any member
+     of the public is a licensee, and is addressed as "you".  You
+     accept the license if you copy, modify or distribute the work in a
+     way requiring permission under copyright law.
+
+     A "Modified Version" of the Document means any work containing the
+     Document or a portion of it, either copied verbatim, or with
+     modifications and/or translated into another language.
+
+     A "Secondary Section" is a named appendix or a front-matter section
+     of the Document that deals exclusively with the relationship of the
+     publishers or authors of the Document to the Document's overall
+     subject (or to related matters) and contains nothing that could
+     fall directly within that overall subject.  (Thus, if the Document
+     is in part a textbook of mathematics, a Secondary Section may not
+     explain any mathematics.)  The relationship could be a matter of
+     historical connection with the subject or with related matters, or
+     of legal, commercial, philosophical, ethical or political position
+     regarding them.
+
+     The "Invariant Sections" are certain Secondary Sections whose
+     titles are designated, as being those of Invariant Sections, in
+     the notice that says that the Document is released under this
+     License.  If a section does not fit the above definition of
+     Secondary then it is not allowed to be designated as Invariant.
+     The Document may contain zero Invariant Sections.  If the Document
+     does not identify any Invariant Sections then there are none.
+
+     The "Cover Texts" are certain short passages of text that are
+     listed, as Front-Cover Texts or Back-Cover Texts, in the notice
+     that says that the Document is released under this License.  A
+     Front-Cover Text may be at most 5 words, and a Back-Cover Text may
+     be at most 25 words.
+
+     A "Transparent" copy of the Document means a machine-readable copy,
+     represented in a format whose specification is available to the
+     general public, that is suitable for revising the document
+     straightforwardly with generic text editors or (for images
+     composed of pixels) generic paint programs or (for drawings) some
+     widely available drawing editor, and that is suitable for input to
+     text formatters or for automatic translation to a variety of
+     formats suitable for input to text formatters.  A copy made in an
+     otherwise Transparent file format whose markup, or absence of
+     markup, has been arranged to thwart or discourage subsequent
+     modification by readers is not Transparent.  An image format is
+     not Transparent if used for any substantial amount of text.  A
+     copy that is not "Transparent" is called "Opaque".
+
+     Examples of suitable formats for Transparent copies include plain
+     ASCII without markup, Texinfo input format, LaTeX input format,
+     SGML or XML using a publicly available DTD, and
+     standard-conforming simple HTML, PostScript or PDF designed for
+     human modification.  Examples of transparent image formats include
+     PNG, XCF and JPG.  Opaque formats include proprietary formats that
+     can be read and edited only by proprietary word processors, SGML or
+     XML for which the DTD and/or processing tools are not generally
+     available, and the machine-generated HTML, PostScript or PDF
+     produced by some word processors for output purposes only.
+
+     The "Title Page" means, for a printed book, the title page itself,
+     plus such following pages as are needed to hold, legibly, the
+     material this License requires to appear in the title page.  For
+     works in formats which do not have any title page as such, "Title
+     Page" means the text near the most prominent appearance of the
+     work's title, preceding the beginning of the body of the text.
+
+     A section "Entitled XYZ" means a named subunit of the Document
+     whose title either is precisely XYZ or contains XYZ in parentheses
+     following text that translates XYZ in another language.  (Here XYZ
+     stands for a specific section name mentioned below, such as
+     "Acknowledgements", "Dedications", "Endorsements", or "History".)
+     To "Preserve the Title" of such a section when you modify the
+     Document means that it remains a section "Entitled XYZ" according
+     to this definition.
+
+     The Document may include Warranty Disclaimers next to the notice
+     which states that this License applies to the Document.  These
+     Warranty Disclaimers are considered to be included by reference in
+     this License, but only as regards disclaiming warranties: any other
+     implication that these Warranty Disclaimers may have is void and
+     has no effect on the meaning of this License.
+
+  2. VERBATIM COPYING
+
+     You may copy and distribute the Document in any medium, either
+     commercially or noncommercially, provided that this License, the
+     copyright notices, and the license notice saying this License
+     applies to the Document are reproduced in all copies, and that you
+     add no other conditions whatsoever to those of this License.  You
+     may not use technical measures to obstruct or control the reading
+     or further copying of the copies you make or distribute.  However,
+     you may accept compensation in exchange for copies.  If you
+     distribute a large enough number of copies you must also follow
+     the conditions in section 3.
+
+     You may also lend copies, under the same conditions stated above,
+     and you may publicly display copies.
+
+  3. COPYING IN QUANTITY
+
+     If you publish printed copies (or copies in media that commonly
+     have printed covers) of the Document, numbering more than 100, and
+     the Document's license notice requires Cover Texts, you must
+     enclose the copies in covers that carry, clearly and legibly, all
+     these Cover Texts: Front-Cover Texts on the front cover, and
+     Back-Cover Texts on the back cover.  Both covers must also clearly
+     and legibly identify you as the publisher of these copies.  The
+     front cover must present the full title with all words of the
+     title equally prominent and visible.  You may add other material
+     on the covers in addition.  Copying with changes limited to the
+     covers, as long as they preserve the title of the Document and
+     satisfy these conditions, can be treated as verbatim copying in
+     other respects.
+
+     If the required texts for either cover are too voluminous to fit
+     legibly, you should put the first ones listed (as many as fit
+     reasonably) on the actual cover, and continue the rest onto
+     adjacent pages.
+
+     If you publish or distribute Opaque copies of the Document
+     numbering more than 100, you must either include a
+     machine-readable Transparent copy along with each Opaque copy, or
+     state in or with each Opaque copy a computer-network location from
+     which the general network-using public has access to download
+     using public-standard network protocols a complete Transparent
+     copy of the Document, free of added material.  If you use the
+     latter option, you must take reasonably prudent steps, when you
+     begin distribution of Opaque copies in quantity, to ensure that
+     this Transparent copy will remain thus accessible at the stated
+     location until at least one year after the last time you
+     distribute an Opaque copy (directly or through your agents or
+     retailers) of that edition to the public.
+
+     It is requested, but not required, that you contact the authors of
+     the Document well before redistributing any large number of
+     copies, to give them a chance to provide you with an updated
+     version of the Document.
+
+  4. MODIFICATIONS
+
+     You may copy and distribute a Modified Version of the Document
+     under the conditions of sections 2 and 3 above, provided that you
+     release the Modified Version under precisely this License, with
+     the Modified Version filling the role of the Document, thus
+     licensing distribution and modification of the Modified Version to
+     whoever possesses a copy of it.  In addition, you must do these
+     things in the Modified Version:
+
+       A. Use in the Title Page (and on the covers, if any) a title
+          distinct from that of the Document, and from those of
+          previous versions (which should, if there were any, be listed
+          in the History section of the Document).  You may use the
+          same title as a previous version if the original publisher of
+          that version gives permission.
+
+       B. List on the Title Page, as authors, one or more persons or
+          entities responsible for authorship of the modifications in
+          the Modified Version, together with at least five of the
+          principal authors of the Document (all of its principal
+          authors, if it has fewer than five), unless they release you
+          from this requirement.
+
+       C. State on the Title page the name of the publisher of the
+          Modified Version, as the publisher.
+
+       D. Preserve all the copyright notices of the Document.
+
+       E. Add an appropriate copyright notice for your modifications
+          adjacent to the other copyright notices.
+
+       F. Include, immediately after the copyright notices, a license
+          notice giving the public permission to use the Modified
+          Version under the terms of this License, in the form shown in
+          the Addendum below.
+
+       G. Preserve in that license notice the full lists of Invariant
+          Sections and required Cover Texts given in the Document's
+          license notice.
+
+       H. Include an unaltered copy of this License.
+
+       I. Preserve the section Entitled "History", Preserve its Title,
+          and add to it an item stating at least the title, year, new
+          authors, and publisher of the Modified Version as given on
+          the Title Page.  If there is no section Entitled "History" in
+          the Document, create one stating the title, year, authors,
+          and publisher of the Document as given on its Title Page,
+          then add an item describing the Modified Version as stated in
+          the previous sentence.
+
+       J. Preserve the network location, if any, given in the Document
+          for public access to a Transparent copy of the Document, and
+          likewise the network locations given in the Document for
+          previous versions it was based on.  These may be placed in
+          the "History" section.  You may omit a network location for a
+          work that was published at least four years before the
+          Document itself, or if the original publisher of the version
+          it refers to gives permission.
+
+       K. For any section Entitled "Acknowledgements" or "Dedications",
+          Preserve the Title of the section, and preserve in the
+          section all the substance and tone of each of the contributor
+          acknowledgements and/or dedications given therein.
+
+       L. Preserve all the Invariant Sections of the Document,
+          unaltered in their text and in their titles.  Section numbers
+          or the equivalent are not considered part of the section
+          titles.
+
+       M. Delete any section Entitled "Endorsements".  Such a section
+          may not be included in the Modified Version.
+
+       N. Do not retitle any existing section to be Entitled
+          "Endorsements" or to conflict in title with any Invariant
+          Section.
+
+       O. Preserve any Warranty Disclaimers.
+
+     If the Modified Version includes new front-matter sections or
+     appendices that qualify as Secondary Sections and contain no
+     material copied from the Document, you may at your option
+     designate some or all of these sections as invariant.  To do this,
+     add their titles to the list of Invariant Sections in the Modified
+     Version's license notice.  These titles must be distinct from any
+     other section titles.
+
+     You may add a section Entitled "Endorsements", provided it contains
+     nothing but endorsements of your Modified Version by various
+     parties--for example, statements of peer review or that the text
+     has been approved by an organization as the authoritative
+     definition of a standard.
+
+     You may add a passage of up to five words as a Front-Cover Text,
+     and a passage of up to 25 words as a Back-Cover Text, to the end
+     of the list of Cover Texts in the Modified Version.  Only one
+     passage of Front-Cover Text and one of Back-Cover Text may be
+     added by (or through arrangements made by) any one entity.  If the
+     Document already includes a cover text for the same cover,
+     previously added by you or by arrangement made by the same entity
+     you are acting on behalf of, you may not add another; but you may
+     replace the old one, on explicit permission from the previous
+     publisher that added the old one.
+
+     The author(s) and publisher(s) of the Document do not by this
+     License give permission to use their names for publicity for or to
+     assert or imply endorsement of any Modified Version.
+
+  5. COMBINING DOCUMENTS
+
+     You may combine the Document with other documents released under
+     this License, under the terms defined in section 4 above for
+     modified versions, provided that you include in the combination
+     all of the Invariant Sections of all of the original documents,
+     unmodified, and list them all as Invariant Sections of your
+     combined work in its license notice, and that you preserve all
+     their Warranty Disclaimers.
+
+     The combined work need only contain one copy of this License, and
+     multiple identical Invariant Sections may be replaced with a single
+     copy.  If there are multiple Invariant Sections with the same name
+     but different contents, make the title of each such section unique
+     by adding at the end of it, in parentheses, the name of the
+     original author or publisher of that section if known, or else a
+     unique number.  Make the same adjustment to the section titles in
+     the list of Invariant Sections in the license notice of the
+     combined work.
+
+     In the combination, you must combine any sections Entitled
+     "History" in the various original documents, forming one section
+     Entitled "History"; likewise combine any sections Entitled
+     "Acknowledgements", and any sections Entitled "Dedications".  You
+     must delete all sections Entitled "Endorsements."
+
+  6. COLLECTIONS OF DOCUMENTS
+
+     You may make a collection consisting of the Document and other
+     documents released under this License, and replace the individual
+     copies of this License in the various documents with a single copy
+     that is included in the collection, provided that you follow the
+     rules of this License for verbatim copying of each of the
+     documents in all other respects.
+
+     You may extract a single document from such a collection, and
+     distribute it individually under this License, provided you insert
+     a copy of this License into the extracted document, and follow
+     this License in all other respects regarding verbatim copying of
+     that document.
+
+  7. AGGREGATION WITH INDEPENDENT WORKS
+
+     A compilation of the Document or its derivatives with other
+     separate and independent documents or works, in or on a volume of
+     a storage or distribution medium, is called an "aggregate" if the
+     copyright resulting from the compilation is not used to limit the
+     legal rights of the compilation's users beyond what the individual
+     works permit.  When the Document is included in an aggregate, this
+     License does not apply to the other works in the aggregate which
+     are not themselves derivative works of the Document.
+
+     If the Cover Text requirement of section 3 is applicable to these
+     copies of the Document, then if the Document is less than one half
+     of the entire aggregate, the Document's Cover Texts may be placed
+     on covers that bracket the Document within the aggregate, or the
+     electronic equivalent of covers if the Document is in electronic
+     form.  Otherwise they must appear on printed covers that bracket
+     the whole aggregate.
+
+  8. TRANSLATION
+
+     Translation is considered a kind of modification, so you may
+     distribute translations of the Document under the terms of section
+     4.  Replacing Invariant Sections with translations requires special
+     permission from their copyright holders, but you may include
+     translations of some or all Invariant Sections in addition to the
+     original versions of these Invariant Sections.  You may include a
+     translation of this License, and all the license notices in the
+     Document, and any Warranty Disclaimers, provided that you also
+     include the original English version of this License and the
+     original versions of those notices and disclaimers.  In case of a
+     disagreement between the translation and the original version of
+     this License or a notice or disclaimer, the original version will
+     prevail.
+
+     If a section in the Document is Entitled "Acknowledgements",
+     "Dedications", or "History", the requirement (section 4) to
+     Preserve its Title (section 1) will typically require changing the
+     actual title.
+
+  9. TERMINATION
+
+     You may not copy, modify, sublicense, or distribute the Document
+     except as expressly provided for under this License.  Any other
+     attempt to copy, modify, sublicense or distribute the Document is
+     void, and will automatically terminate your rights under this
+     License.  However, parties who have received copies, or rights,
+     from you under this License will not have their licenses
+     terminated so long as such parties remain in full compliance.
+
+ 10. FUTURE REVISIONS OF THIS LICENSE
+
+     The Free Software Foundation may publish new, revised versions of
+     the GNU Free Documentation License from time to time.  Such new
+     versions will be similar in spirit to the present version, but may
+     differ in detail to address new problems or concerns.  See
+     `http://www.gnu.org/copyleft/'.
+
+     Each version of the License is given a distinguishing version
+     number.  If the Document specifies that a particular numbered
+     version of this License "or any later version" applies to it, you
+     have the option of following the terms and conditions either of
+     that specified version or of any later version that has been
+     published (not as a draft) by the Free Software Foundation.  If
+     the Document does not specify a version number of this License,
+     you may choose any version ever published (not as a draft) by the
+     Free Software Foundation.
+
+ADDENDUM: How to use this License for your documents
+----------------------------------------------------
+
+   To use this License in a document you have written, include a copy of
+the License in the document and put the following copyright and license
+notices just after the title page:
+
+       Copyright (C)  YEAR  YOUR NAME.
+       Permission is granted to copy, distribute and/or modify this document
+       under the terms of the GNU Free Documentation License, Version 1.2
+       or any later version published by the Free Software Foundation;
+       with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+       Texts.  A copy of the license is included in the section entitled ``GNU
+       Free Documentation License''.
+
+   If you have Invariant Sections, Front-Cover Texts and Back-Cover
+Texts, replace the "with...Texts." line with this:
+
+         with the Invariant Sections being LIST THEIR TITLES, with
+         the Front-Cover Texts being LIST, and with the Back-Cover Texts
+         being LIST.
+
+   If you have Invariant Sections without Cover Texts, or some other
+combination of the three, merge those two alternatives to suit the
+situation.
+
+   If your document contains nontrivial examples of program code, we
+recommend releasing these examples in parallel under your choice of
+free software license, such as the GNU General Public License, to
+permit their use in free software.
+
+
+File: ratpoison.info,  Node: About,  Next: Contacting,  Prev: GNU Free Documentation License,  Up: Top
+
+About
+*****
+
+   ratpoison is a simple Window Manager with no fat library
+dependencies, no fancy graphics, no window decorations, and no rodent
+dependence. It is largely modeled after GNU Screen which has done
+wonders in the virtual terminal market.
+
+   All interaction with the window manager is done through keystrokes.
+ratpoison has a prefix map to minimize the key clobbering that cripples
+EMACS and other quality pieces of software.
+
+   ratpoison was written by Shawn Betts (<sabetts@vcn.bc.ca>).
+
+
+File: ratpoison.info,  Node: Contacting,  Next: Concepts,  Prev: About,  Up: Top
+
+Contacting
+**********
+
+   ratpoison is hosted on <http://savannah.nongnu.org>. To see the
+latest developments in ratpoison go to
+<http://savannah.nongnu.org/projects/ratpoison> or visit the ratpoison
+webpage at <http://www.nongnu.org/ratpoison>.
+
+   There is also a ratpoison mailing list:
+<ratpoison-devel@nongnu.org>. For details on subscribing and for the
+list archives go to the ratpoison Savannah project.
+
+   There is a #ratpoison irc channel on irc.freenode.net.
+
+
+File: ratpoison.info,  Node: Concepts,  Next: General Use,  Prev: Contacting,  Up: Top
+
+Concepts
+********
+
+   ratpoison uses the concept of "panes" to place and size windows.
+Instead of allowing windows to have arbitary shapes at arbitary
+locations on the screen, the display is divided into panes, the same
+way a physical window might contain several pieces of glass seperated
+by wood. In ratpoison, the panes are called "frames", and windows are
+placed in them, maximised. ratpoison starts with one frame, which can
+be split into an arbitary number of smaller ones. Each frame can be
+split in half either horizontally or vertically. You can move among
+them, making different ones the current. For more information, see
+*Note Splitting Frames::.
+
+   Each frame has at most one window associated with it, which is
+visible in that frame. If you select a window that is associated with a
+frame, the focus will move to its associated frame, rather than moving
+the window to the current frame. If you select a window that is not
+associated with a frame, that window will be opened in the current
+frame and resized to fit that frame.
+
+   If the window associated with a frame does not fill the frame
+completely, the various gravity commands control how it is placed.
+
+   If no window was open in that frame before the current window was
+opened, the X root will be visible behind it.
+
+   Transient windows (dialog boxes, splash screens, and the like) are
+handled specially. In order to understand the contents of a transient
+window, the previously focused window is often required. Take a search
+window, it is useful to be able to see the document you are searching
+as well as the search window. For this reason transient windows appear
+overtop (according to their gravity) of the previously focused window.
+
+   Every window belongs in a group. A group is simply that: a group of
+windows. By default there is only one group (the "default group") that
+all windows exist in. You can create new groups. When a program creates
+a window it will be added to the current group. Groups are generally
+used to organize windows into different classes such as work and
+wasting-time-at-work.
+
+
+File: ratpoison.info,  Node: General Use,  Next: Windows,  Prev: Concepts,  Up: Top
+
+General Use
+***********
+
+   When ratpoison starts you should see an empty X server. To open an x
+terminal hit `C-t c'. You can now run shell commands as you would on
+any terminal. Notice the terminal maximized full screen. `C-t !' will
+run a single shell command and saves you the effort of opening a
+terminal.
+
+   Once you have a couple X programs running, you'll want to navigate
+between windows. To see what windows are being managed hit `C-t w'.
+Each window has a number. You can jump to a window by hitting `C-t'
+followed by the window's number. This assumes the the window's number
+is one digit. You can also switch to a window by typing in part of its
+name. To do this hit `C-t ''.
+
+   ratpoison allows you to cycle through the windows with `C-t n' and
+`C-t p'.
+
+   And That concludes a brief introduction on how to use ratpoison.
+Notice how we didn't have to drag a single window, or click a single
+maximize button? Beautiful wasn't it? Felt fast? Cool? It's modern
+computing at its best.
+
+
+File: ratpoison.info,  Node: Windows,  Next: Groups,  Prev: General Use,  Up: Top
+
+Windows
+*******
+
+   Windows are what ratpoison manages.
+
+* Menu:
+
+* Manipulating Windows::
+* Window Classes::
+* Unmanaged Windows::
+* Rudeness::
+
+
+File: ratpoison.info,  Node: Manipulating Windows,  Next: Window Classes,  Prev: Windows,  Up: Windows
+
+Manipulating Windows
+====================
+
+   The following are commands used to manipulate windows.
+
+ - Command: select N
+     This jumps you to window N where N is the window number as shown
+     in the Program Bar. You can do the same trick with `C-N' too. To
+     select no window, blanking the current frame, type `select -'.
+
+ - Command: select WINDOW-NAME
+     Go to a window by name. A shortcut is `C-t ''.
+
+ - Command: windows FMT
+     This displays the Program Bar which displays the windows you
+     currently have running. The number before each window name is used
+     to jump to that window. You can do this by typing `C-t N' where N
+     is the number of the window. Note that only windows with numbers
+     from 0 to 9 can be referenced using this keystroke.  To reach
+     windows with numbers greater than 9, use `C-t '' and type the
+     number at the prompt.
+
+     After 5 seconds the Program Bar disappears.
+
+     This command is bound to `C-t w' by default.
+
+     When invoked from the command-line like this,
+
+          $ ratpoison -c windows
+
+     Instead of a message bar, you will get a list of the windows
+     printed to stdout. This allows you to write more advanced scripts
+     than simple keyboard macros. This is where FMT comes into play. If
+     `windows' is given an argument it treats it as the format string as
+     described in `set winfmt'.
+
+ - Command: title TITLE
+     Rename the currently active window. This name will remain for the
+     duration of the window's life, unless you change it again. By
+     default, the `C-t A' keystroke is bound to this command.
+
+ - Command: other
+     This toggles between the current window and the last window. By
+     default, this is bound to `C-t C-t'.
+
+ - Command: prev
+     This jumps you to the previous window in the window list. By
+     default, this is bound to `C-t p'.
+
+ - Command: next
+     This jumps you to the next window in the window list. This one is
+     bound to three keystrokes, namely `C-t n', `C-t space', and `C-t
+     enter'.
+
+ - Command: kill
+     This destroys the current window. Normally you should only need to
+     use `delete', but just in case you need to rip the heart out of a
+     misbehaving window this command should do the trick. Also
+     available as `C-t K'.
+
+ - Command: info FMT
+     Display information about the current window. At optional FMT
+     argument can be passed to override the default format. `info'
+     accepts the same format options as `windows'.
+
+
+ - Command: gravity G
+     Change the gravity of the current window. A normal window will
+     default to the top-left corner of the screen, but it can also be
+     placed at the bottom-right corner of the screen. Valid values for
+     G are the 8 directions `northwest', `north', `northeast', `east',
+     `southeast', `south', `southwest' and `west', clockwise from the
+     top left corner. `center' will center the window in the frame. G
+     and can be abbreviated to the standard compass 1 and 2 letter
+     abbreviations (i.e. `nw', `s', etc).
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: delete
+     This deletes the current window. You can access it with the `C-t k'
+     keystroke.
+
+ - Command: set infofmt FMT
+     Set the default window format for the `info' command. See `set
+     winfmt' for accepted format characters.
+
+ - Command: set winname NAME
+     There are three resources ratpoison can get a window's name from:
+     the WMNAME hint, the res_name from the WMCLASS hint, or the
+     res_class from the WMCLASS hint. NAME can be `title' which is what
+     most window managers put in the title bar, `name' which is the
+     res_name, or `class' which is the res_class.
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: set wingravity G
+     Set the default gravity for normal windows. See the `gravity'
+     command.
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: set winliststyle SETTING
+     The window list can be displayed in a row or a column. SETTING can
+     be `row' or `column'.
+
+ - Command: set winfmt FMT
+     Set the default window format for the `windows' command. By
+     default it is `%n%s%t'. The following is a list of valid format
+     characters:
+
+    `%a'
+          Application Name
+
+    `%c'
+          Resource Class
+
+    `%f'
+          The frame number the window is displayed in or a space if it
+          is not in a frame.
+
+    `%g'
+          The window's gravity setting
+
+    `%h'
+          The window's height
+
+    `%H'
+          The window's height increment hint.
+
+    `%i'
+          X11 Window ID
+
+    `%l'
+          A unique number based on when the window was last accessed.
+          The higher the number, the more recently it was accessed.
+
+    `%n'
+          The window number
+
+    `%s'
+          Window status (current window, last window, etc)
+
+    `%S'
+          The window's screen
+
+    `%t'
+          Window Name
+
+    `%T'
+          Whether the window is a transient or not.
+
+    `%w'
+          The window's width
+
+    `%W'
+          The window's width increment hint
+
+    `%x'
+          the window's xinerama screen
+
+     Additionally there can be a number between the percent sign and
+     the format character, denoting a maximum length this value is to
+     truncate to, e.g. `%n%s%20t'.
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: number N TARGET
+     Set a window's number to N. If another window occupies the
+     requested number already, then the windows' numbers are swapped.
+
+     The second argument, TARGET, is optional. It should be the number
+     of the window whose number will be changed. If TARGET is omitted
+     ratpoison defaults to the current window.
+
+ - Command: set transgravity G
+     Set the default alignment for transient windows. See the `gravity'
+     command.
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: set maxsizegravity G
+     Set the default alignment for windows with maxsize hints. See the
+     `gravity' command.
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: set border N
+     Set the border width for all windows.
+
+     When called with no arguments, the current setting is returned.
+
+
+File: ratpoison.info,  Node: Window Classes,  Next: Unmanaged Windows,  Prev: Manipulating Windows,  Up: Windows
+
+Window Classes
+==============
+
+   Window classes are a way of grouping windows together. Windows that
+are part of the same program generally have the same class. Ratpoison
+takes advantage of this to help you navigate between windows of the
+same class. This is useful if you only want to cycle through Emacs
+frames or XTerms.
+
+ - Command: inext
+     Go to the next window in the window list that is in the same class
+     as the current window.
+
+ - Command: iprev
+     Go to the previous window in the window list that is in the same
+     class as the current window.
+
+ - Command: iother
+     Go to the last accessed window that is in the same class as the
+     current window.
+
+ - Command: cnext
+     Go to the next window in the window list that is in a different
+     class from the current window.
+
+ - Command: cprev
+     Go to the previous window in the window list that is in a different
+     class from the current window.
+
+ - Command: cother
+     Go to the last accessed window that is in a different class from
+     the current window.
+
+
+File: ratpoison.info,  Node: Unmanaged Windows,  Next: Rudeness,  Prev: Window Classes,  Up: Windows
+
+Unmanaged Windows
+=================
+
+   ratpoison can intentionally not manage windows. ratpoison keeps a
+list of strings and if any new window's name matches a string in the
+list, then it will not be picked up and managed by ratpoison.
+
+   The following are commands to manipulate this list
+
+ - Command: clrunmanaged
+     Clear the unmanaged window list.
+
+ - Command: unmanage TEXT
+     Add TEXT to the unmanaged window list. Any window whose name
+     matches any of the strings in the unmanaged window list will not be
+     handled in any way by ratpoison. This only applies to new windows
+     (not windows already managed by ratpoison).
+
+     When called with no arguments, the list is returned.
+
+
+File: ratpoison.info,  Node: Rudeness,  Prev: Unmanaged Windows,  Up: Windows
+
+Rudeness
+========
+
+   Some programs will attempt to steal the focus without the users
+permission. Not only is this a sign of a lame programmers attempt to fix
+a window manager problem in the wrong place, it's just plain rude. By
+default ratpoison will honour these rudeness requests, but it doesn't
+have to. Use the `rudeness' command to deal with such programs.
+
+ - Command: rudeness N
+     The rudeness command lets you decide what windows pop-up
+     automatically and when. This is often useful for those deep hack
+     sessions when you absolutely can't be disturbed.
+
+     There are two kinds of windows: normal windows (like an xterm) and
+     transient windows (generally pop-up dialog boxes). When a client
+     program wants to display a new window it makes a requests to
+     ratpoison. ratpoison then decides whether to grant the request and
+     display the window or ignore it. A client program can also request
+     that one of its windows be raised. You can customize ratpoison to
+     either honour these requests (the default operation) or ignore
+     them.
+
+     N is a number from 0 to 15. Each of the four bits determine which
+     requests ratpoison grants.
+
+    Bit 0
+          Tells ratpoison to grant raise requests on transient windows
+
+    Bit 1
+          Tells ratpoison to grant raise requests on normal windows
+
+    Bit 2
+          Tells ratpoison to grant display requests on new transient
+          windows
+
+    Bit 3
+          Tells ratpoison to grant display requests on new normal
+          windows
+
+     For example, if you wanted only wanted to grant transient windows
+     raise requests and display requests you would type `rudeness 5'.
+     If a request is not granted ratpoison will tell you about the
+     request with a message like `Raise request from window 1 (emacs)'.
+
+     When called with no arguments, the current setting is returned.
+
+
+File: ratpoison.info,  Node: Groups,  Next: Frames,  Prev: Windows,  Up: Top
+
+Groups
+******
+
+   ratpoison provides functionality to group windows together. This
+coupled with saving and restoring frames configurations is what most
+people would call "virtual desktops" or "workspaces".
+
+   While ratpoison doesn't explicitly provide support for such things,
+it does allow you to write scripts to this end. Such a script exists in
+`contrib/' called `rpws'. Consult that file for details on setting up
+workspaces inside ratpoison.
+
+   Groups are more general purpose than workspaces. windows from one
+group can be visible along with windows from another group. If you
+switch to a different group nothing changes except the list of windows
+you can cycle through. ratpoison allows the user to move a window from
+one group to another, merge two groups, create new groups, and delete
+existing ones.
+
+   The following is a list of of commands used for manipulating groups.
+
+ - Command: gnew NAME
+     Create a new group with the name NAME. NAME is optional. The new
+     group becomes the current group.
+
+ - Command: gnewbg NAME
+     This is the same as `gnew' except that the current group does not
+     change.
+
+ - Command: groups
+     Display a list of groups with a similar format to `windows'.
+
+ - Command: gmove GROUP
+     Move the current window to GROUP.
+
+ - Command: gnext
+     Go to the next group in the list.
+
+ - Command: gprev
+     Go to the previous group in the list.
+
+ - Command: gselect GROUP
+     Select a particular group by name or number. If GROUP is not
+     provided, ratpoison will interactively prompt for the group.
+
+ - Command: gmerge GROUP
+     Merge GROUP with the current group. All windows in GROUP will be
+     moved to the current group. GROUP is not deleted.
+
+ - Command: gdelete GROUP
+     Delete a group. GROUP is optional. If it is not specified
+     ratpoison will attempt to delete the current group. Only empty
+     groups can be deleted. To empty a group see `gmerge'.
+
+
+File: ratpoison.info,  Node: Frames,  Next: Multiple Monitors,  Prev: Groups,  Up: Top
+
+Frames
+******
+
+   Sometimes you may want to see two or more windows at the same time.
+ratpoison allows you to split the display into frames (see *Note
+Concepts::). Each frame can then contain 1 window.
+
+* Menu:
+
+* Splitting Frames::
+* Resizing Frames::
+* Frame Navigation Commands::
+* Saving and Restoring Frame Sets::
+* Frame Numbering::
+* Dedicated Frames::
+
+
+File: ratpoison.info,  Node: Splitting Frames,  Next: Resizing Frames,  Prev: Frames,  Up: Frames
+
+Splitting Frames
+================
+
+   To split the current frame horizontally use `C-t s'. To split the
+current frame vertically use `C-t S'. If you have enough windows,
+you'll notice that the new frame will find a window for itself. You can
+now use the normal navigation commands to switch windows in the frame.
+Note, however, that if you switch by name or number to a window that is
+already in another frame, you'll switch to that frame.
+
+   Before too long, you'll probably want to switch to another frame. Use
+`C-t tab' to cycle through the frames. If you want to remove a frame
+use `C-t R'. ratpoison automatically adjusts the size of the other
+frames to take up the free space. Unfortunately ratpoison may not
+always fill it in the way you might like it to.
+
+   Finally, when you've had enough of the splitting and you just want
+good ol' full screen ratpoison press `C-t Q' to remove all splits and
+leave you with the current window full screen.
+
+ - Command: remove
+     Kill the current frame. This is a no-op if there is only one frame.
+
+ - Command: only
+     Kill all frames but the current one.
+
+ - Command: split N
+ - Command: vsplit N
+     Split the current frame vertically in two. The last accessed window
+     not occupying a frame will be the second window.
+
+     N is either a fraction of the form `x/y' or a number. If it is a
+     fraction then the current frame is resized to that fraction of its
+     original size and the new frame takes up the remaining space. For
+     instance, `split 1/4' will split the current frame to a quarter of
+     its original size and the new frame will then be 3/4 of the size of
+     the original frame.
+
+     If it is a pixel, the original frame is resized to that many
+     pixels. If N has a minus sign before it, then the new frame will
+     shrink by that many pixels.
+
+ - Command: hsplit N
+     Split the current frame horizontally in two. The last accessed
+     window not occupying a frame will be the second window.
+
+     N is either a fraction of the form `x/y' or a number. If it is a
+     fraction then the current frame is resized to that fraction of its
+     original size and the new frame takes up the remaining space. For
+     instance, `split 1/4' will split the current frame to a quarter of
+     its original size and the new frame will then be 3/4 of the size of
+     the original frame.
+
+     If it is a pixel, the original frame is resized to that many
+     pixels. If N has a minus sign before it, then the new frame will
+     shrink by that many pixels.
+
+
+File: ratpoison.info,  Node: Resizing Frames,  Next: Frame Navigation Commands,  Prev: Splitting Frames,  Up: Frames
+
+Resizing Frames
+===============
+
+   ratpoison provides a command, `resize', that resizes the current
+frame. It is bound to the key `C-t r' by default. `resize' can be used
+non-interactively by providing two arguments: the number of pixels to
+grow horizontally and the number to grow vertically. For example, if
+you wanted to grow the current window by 10 pixels horizontally and
+shrink it vertically by 50 you could enter the command:
+
+     resize 10 -50
+
+   When resizing interactively, the following keys are used:
+
+`C-p'
+     Grow the frame vertically.
+
+`C-n'
+     Shrink the frame vertically.
+
+`C-f'
+     Grow the frame horizontally.
+
+`C-b'
+     Shrink the frame horizontally.
+
+`return'
+     Accept the new frame size.
+
+`C-g'
+     Abort and restore the frame to its original size.
+
+   The increment size used to resize the frame interactively is
+customized with the command `set resizeunit'.
+
+ - Command: set resizeunit PIXELS
+     Set the number of pixels a frame will grow or shrink by when being
+     dynamically resized.
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: resize HORIZONTAL VERTICAL
+     Resize the current frame by HORIZONTAL pixels horizontally, and
+     VERTICAL pixels vertically. If no arguments are given and the
+     command is called interactively, ratpoison will let the user
+     dynamically resize the frame using `C-p' to shrink vertically,
+     `C-n' to grow vertically, `C-b' to shrink horizontally, `C-f' to
+     grow horizontally, and `s' to shrink the frame to the size of the
+     window (See the `shrink' command). When you have resized the frame
+     to your liking, press `Return' to finish.
+
+ - Command: shrink
+     If a window has resize increment hints, such as xterms, the window
+     may not be able to take up the whole frame. In this case, use this
+     command to suck the frame up to the to window, reclaiming any
+     wasted space.
+
+
+File: ratpoison.info,  Node: Frame Navigation Commands,  Next: Saving and Restoring Frame Sets,  Prev: Resizing Frames,  Up: Frames
+
+Frame Navigation Commands
+=========================
+
+   Here are the commands for Navigating frames.
+
+ - Command: fselect N
+     Select a frame by number. If an argument is passed to it then
+     attempt to select the frame whose number is N. If not, ratpoison
+     will print a number at the top left corner of each frame and wait
+     for the user to type the number they wish to select. Currently
+     there is no way to select a frame whose number is greater than 9
+     unless the number is passed as an argument.
+
+ - Command: curframe
+     Indicate which frame is the current frame.
+
+ - Command: focus
+     cycle through ratpoison's frames.
+
+ - Command: focusprev
+     cycle through ratpoison's frames backwards.
+
+ - Command: focusdown
+     Move to the frame below the current frame.
+
+ - Command: focuslast
+     Switch to the last focused frame.
+
+ - Command: focusleft
+     Move to the frame left of the current frame.
+
+ - Command: focusright
+     Move to the frame right of the current frame.
+
+ - Command: focusup
+     Move to the frame above the current frame.
+
+
+File: ratpoison.info,  Node: Saving and Restoring Frame Sets,  Next: Frame Numbering,  Prev: Frame Navigation Commands,  Up: Frames
+
+Saving and Restoring Frame Sets
+===============================
+
+   ratpoison provides two commands, `fdump' and `frestore', that allow
+the user to save and restore frame configurations. Let's say, for
+example, you have split your desktop into several frames with some
+windows in these frames and now you want to quickly bring Emacs forward
+and browse some code (full-screen of course) then return to your funky
+frame configuration. You could use `fdump' to dump the frames, hit `C-t
+Q' to remove all frames, and then select your emacs window. When you've
+finished with emacs you could use `frestore' to restore the windows and
+frames.
+
+   If a frame contained a window when you dumped the frame layout but
+that window is not present when you restore the layout, the frame
+holding that window will be blank.
+
+   Calling `fdump' and `frestore' and copying and pasting the layout by
+hand each time is a bit cumbersome. There are some simple bindings in
+`doc/sample.ratpoisonrc' that allow you to save and restore frame
+layouts with the press of a key.
+
+ - Command: fdump SCREEN-NUM
+     Dump the current frame layout as text.
+
+     Without an argument the current screen's frames are dumped. With an
+     argument the SCREEN-NUMth screen is dumped. *Note Multiple
+     Monitors::.
+
+ - Command: frestore FRAMES
+     Restore the frame layout based on the list of frames FRAMES.
+     FRAMES should be the text that was printed after calling `fdump'.
+
+ - Command: undo
+     Undo the last change of frame layout. This is especially helpful
+     after a `only' command. One can step at most "maxundos" steps back
+     in frame layout history.
+
+ - Command: redo
+     redo the last change that was undone.
+
+
+File: ratpoison.info,  Node: Frame Numbering,  Next: Dedicated Frames,  Prev: Saving and Restoring Frame Sets,  Up: Frames
+
+Frame Numbering
+===============
+
+   Frames are normally numbered starting from 0. But this can be changed
+with `set framesels' to, for instance, include letters as well.
+
+     set framesels abcdefghijklmnopqrstuvwxyz
+
+   The above code will bind letters to frames instead of numbers.
+
+ - Command: set framesels ORDER
+     Tell ratpoison what alphanumeric character to give each frame and
+     in what order.
+
+     When called with no arguments, the current setting is returned.
+

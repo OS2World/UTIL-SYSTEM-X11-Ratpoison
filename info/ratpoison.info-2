@@ -1,0 +1,1130 @@
+This is ratpoison.info, produced by makeinfo version 4.3 from
+ratpoison.texi.
+
+INFO-DIR-SECTION X11
+START-INFO-DIR-ENTRY
+* ratpoison: (ratpoison).       Say good-bye to the rodent
+END-INFO-DIR-ENTRY
+
+   This is the ratpoison user manual.
+
+   Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006 Shawn Betts
+
+   The ratpoison user manual is free documentation; permission is
+granted to copy, distribute and/or modify this document under the terms
+of either:
+
+   a) the GNU General Public License as published by the Free Software
+Foundation; either version 2 of the License, or (at your option) any
+later version, or
+
+   b) the GNU Free Documentation License, version 1.2 or any later
+version published by the Free Software Foundation; with no Invariant
+Sections, no Front-Cover Texts, and no Back-Cover Texts.
+
+   The ratpoison manual is distributed in the hope that it will be
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License or GNU Free Documentation License for more
+details.
+
+   A copy of the FDL is included in the section entitled "GNU Free
+Documentation License".  You should have received a copy of the GNU
+General Public License along with this software; see the file COPYING.
+If not, write to the Free Software Foundation, Inc., 51 Franklin St,
+Fifth Floor, Boston, MA 02110-1301, USA.
+
+   If you choose to allow use of your version of this content only
+under the terms of one of the licenses, indicate your decision by
+deleting the notice of the other license. If you do not delete any of
+those, a recipient may use your version of this file unter the terms of
+either the GNU FDL or the GNU GPL.
+
+   The ratpoison manual is distributed in the hope that it will be
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License or GNU Free Documentation License for more
+details.
+
+
+File: ratpoison.info,  Node: Dedicated Frames,  Prev: Frame Numbering,  Up: Frames
+
+Dedicated Frames
+================
+
+   A dedicated frame is a frame that will not allow new windows to
+appear in it. Only the user may switch windows in this frame.
+
+ - Command: dedicate
+     Toggle whether the current frame is dedicated or not.
+
+
+File: ratpoison.info,  Node: Multiple Monitors,  Next: Keystrokes,  Prev: Frames,  Up: Top
+
+Multiple Monitors
+*****************
+
+   When you've finally accumulated enough computer junk, you'll find
+yourself attaching a second monitor to your computer. ratpoison has
+functionality to help you get around your new and improved desktop
+space.
+
+   The X Windowing System assigns each monitor a screen number. To
+switch to another screen use the commands `nextscreen' and
+`prevscreen'. Or, `sselect' to jump to a specified screen. ratpoison
+will tell you which frame has focus by drawing the current frame
+indicator in it.
+
+   Many commands operate only on the current screen. This becomes
+apparent when you have 2 screens each with 1 frame. In each frame you
+have an xterm. If you try to switch to the other xterm with the command
+`other', for instance, you'll get a message "No other window."
+ratpoison means there's no other window to switch to in the current
+screen. If you want to switch to the other xterm you can switch to it
+by name (use `select' or `C-t ''), by number, or you can use
+`nextscreen', `prevscreen', and `sselect'.
+
+ - Command: nextscreen
+     This jumps you to the next X11 screen. `nextscreen' is used for
+     dual-head displays and multiple monitor setups.
+
+ - Command: prevscreen
+     This jumps you to the previous X11 screen. `prevscreen' is used
+     for dual-head displays and multiple monitor setups.
+
+ - Command: sselect N
+     This jumps you to the Nth X11 screen. Screen numbers start at 0.
+
+ - Command: sdump
+     Like fdump, but dump information about each screen instead of each
+     frame.
+
+ - Command: sfdump
+     Dump all the screen number and the frames on all screens.
+
+ - Command: sfrestore
+     restore a frame configuration created using `sfdump'.
+
+
+File: ratpoison.info,  Node: Keystrokes,  Next: Hooks,  Prev: Multiple Monitors,  Up: Top
+
+Keystrokes
+**********
+
+   Interactive control of ratpoison is done entirely through
+keystrokes. This chapter explains how keystrokes are stored and
+manipulated.
+
+   ratpoison uses the Emacs style key notation. A combination of
+modifiers and one non-modifier key combine to invoke an action. The
+syntax is one or more modifiers seperated with dashes followed by a
+dash and the non-modifier key name. For instance, holding down control,
+shift, and super then pressing the spacebar would be described as:
+
+     S-C-s-space
+
+   The following is a list of modifiers ratpoison accepts:
+
+S
+     Shift modifier
+
+C
+     Control modifier
+
+M
+     Meta modifier
+
+A
+     Alt modifier
+
+H
+     Hyper modifier
+
+s
+     Super modifier
+
+   ratpoison uses the X11 keysym names for keys. Alphanumeric key names
+are exactly what you see on your keyboard. Punctuation and other keys
+have longer names which vary from X server to X server. To find the
+name of a key, see the `describekey' command. Or to find the name of a
+key not yet bound to an action, type `C-t' and then the key. ratpoison
+will tell you it isn't bound and give you the name of the key.
+
+* Menu:
+
+* Key Maps::
+* Default Key Bindings::
+
+
+File: ratpoison.info,  Node: Key Maps,  Next: Default Key Bindings,  Prev: Keystrokes,  Up: Keystrokes
+
+Key Maps
+========
+
+   All keystrokes exist inside a keymap. When you press the prefix key
+you are accessing the `root' keymap. By default all commands reside in
+the `root' key map and are accessed by pressing `C-t'.
+
+   There is also a top level key map, `top'. Any keystroke in this key
+map can be accessed simply by pressing the key. This is where the prefix
+key resides.
+
+   The following example adds a `C-x b' key binding to switch windows,
+much like `C-x b' in Emacs. See the functions below for full
+descriptions.
+
+     # Create the key map
+     newkmap ctrl-x
+     # Bind b to 'select' on our new key map
+     definekey ctrl-x b select
+     # Attach our keymap to the top level key map via C-x.
+     definekey top C-x readkey ctrl-x
+
+   The following functions control creating, editing, and deleting key
+maps.
+
+ - Command: newkmap KMAP
+     Create a new keymap named KMAP.
+
+
+ - Command: delkmap KMAP
+     Delete the keymap, KMAP.
+
+ - Command: bind KEY COMMAND
+     Bind a key to a ratpoison command on the `root' keymap. This
+     command takes two arguments: the key to bind and the command to
+     run. For example, to bind `C-t R' to restart ratpoison:
+
+          bind R restart
+
+ - Command: unbind KEY
+     Unbind a keystroke on the `root' keymap.
+
+ - Command: definekey KMAP KEY COMMAND
+     `definekey' works exactly like `bind' except that it can bind keys
+     on any key map (not just `root').
+
+ - Command: undefinekey KMAP KEY
+     Like `unbind' except that you pass it a key map in KMAP.
+
+ - Command: readkey KMAP
+     Read a key from the keyboard and execute the command associated
+     with it in the keymap, KMAP.
+
+ - Command: link KEY
+     Call the command that KEY is bound to. For instance `link C-t'
+     would call the command `other' and switch to the last window.
+
+ - Command: describekey KEYMAP
+     An interactive way to find the command bound to a given key on the
+     specified keymap. This command will wait for the user to type a
+     key. When the user does, the command will display the command
+     bound to this key.
+
+ - Command: set topkmap KMAP
+     Set the top level keymap to KMAP. You might use this to swap
+     between several common keymappings or to implement modes.
+
+
+File: ratpoison.info,  Node: Default Key Bindings,  Prev: Key Maps,  Up: Keystrokes
+
+Default Key Bindings
+====================
+
+   The default keystrokes are listed in this chapter. Not all commands
+are accessible by default by keys.
+
+`C-t C-t'
+     Switch to the last window.
+
+`C-t t'
+     Sometimes you need to send a C-t to the current window. This
+     keystroke does just that.
+
+`C-t 0-9'
+     Switch to the numbered window.
+
+`C-t -'
+     Select no window, essentially hiding all windows in the current
+     frame.
+
+`C-t A'
+
+`C-t C-A'
+     Rename the current window. The window's new name will prevail for
+     the rest of its lifetime.
+
+`C-t K'
+
+`C-t C-K'
+     Send a DestroyClient event to the current window. This will
+     terminate the application without question.
+
+`C-t n'
+
+`C-t C-n'
+
+`C-t Return'
+
+`C-t C-Return'
+
+`C-t Space'
+
+`C-t C-Space'
+     Go to next window.
+
+`C-t p'
+
+`C-t C-p'
+     Go to previous window.
+
+`C-t ''
+
+`C-t C-''
+     Go to a window by name.  You will usually only need to type the
+     first few characters of the window name.
+
+`C-t a'
+
+`C-t C-a'
+     Display the current time of day.
+
+`C-t c'
+
+`C-t C-c'
+     Open a new X terminal.
+
+`C-t :'
+     This allows you to execute a single ratpoison command.
+
+`C-t !'
+     Run a shell command.
+
+`C-t C-!'
+     Run a shell command through an X terminal.
+
+`C-t i'
+
+`C-t C-i'
+     Display information about the current window.
+
+`C-t k'
+
+`C-t C-k'
+     Close the current window.
+
+`C-t l'
+
+`C-t C-l'
+     Redisplay the current window. Sometimes windows don't respond
+     correctly to the initial maximize event and need some coaxing.
+     This is a fancy way of saying there are still bugs in ratpoison.
+     `C-t l' will force the current window to maximize.
+
+`C-t m'
+
+`C-t C-m'
+     Display the last message.
+
+`C-t v'
+
+`C-t C-v'
+     Display the version of ratpoison.
+
+`C-t V'
+
+`C-t C-V'
+     Display ratpoison's license.
+
+`C-t w'
+
+`C-t C-w'
+     Display the list of managed windows. The current window is
+     highlighted.
+
+`C-t s'
+
+`C-t C-s'
+     Split the current window horizontally in two. The last accessed
+     window not occupying a frame will be the second window.
+
+`C-t S'
+
+`C-t C-S'
+     Split the current window vertically in two. The last accessed
+     window not occupying a frame will be the second window.
+
+`C-t tab'
+     Cycle through ratpoison's frames.
+
+`C-t M-tab'
+     Switch to the last focused frame.
+
+`C-t Q'
+     Kill all frames but the current one.
+
+`C-t R'
+     Kill the current frame. This is a no-op if there is only one frame.
+
+`C-t r'
+
+`C-t C-r'
+     Resize the current frame.
+
+`C-t b'
+
+`C-t C-b'
+     Banish the mouse to the lower right corner of the screen.
+
+`C-t ?'
+     Display a help screen.
+
+`C-t f'
+
+`C-t C-f'
+     select a frame by number.
+
+`C-t F'
+     Indicate which frame is the current frame.
+
+`C-t Down'
+     Move to the frame below the current frame.
+
+`C-t Left'
+     Move to the frame left of the current frame.
+
+`C-t Right'
+     Move to the frame right of the current frame.
+
+`C-t Up'
+     Move to the frame above the current frame.
+
+`C-t C-Down'
+     Exchange the window in the current frame with the window in the
+     frame below it.
+
+`C-t C-Left'
+     Exchange the window in the current frame with the window in the
+     frame to the left of it.
+
+`C-t C-Right'
+     Exchange the window in the current frame with the window in the
+     frame to the rigth of it.
+
+`C-t C-Up'
+     Exchange the window in the current frame with the window in the
+     frame above it.
+
+`C-t x'
+
+`C-t C-x'
+     Choose a frame and exchange the window in the current frame with
+     the window in the chosen frame.
+
+
+File: ratpoison.info,  Node: Hooks,  Next: The Status Bar,  Prev: Keystrokes,  Up: Top
+
+Hooks
+*****
+
+   One of the goals of ratpoison is to allow users to create exciting
+customization to fit their specific needs. Hooks allow a user to latch
+scripts onto certain events.
+
+   Each hook contains a list of commands to be executed when the
+appropriate event occurs in ratpoison. For example, if you want to warp
+the rat to corner of the screen every time you press a top level bound
+key, you could add this to you .ratpoisonrc file:
+
+     addhook key banish
+
+   That should keep the rat out of your way.
+
+ - Command: addhook HOOK COMMAND
+     Add a COMMAND to HOOK. When the hook is run, COMMAND will be
+     executed.
+
+     The following hooks are available:
+
+    key
+          Run when a top level key is pressed (by default the only top
+          level key is the prefix key).
+
+    switchwin
+          Run when the user switches to a different window in the
+          current frame.
+
+    switchframe
+          Run when the user switches to another frame. This is also run
+          when the user switches to a different screen, since a frame
+          switch also occurs.
+
+    switchgroup
+          Run when the user switches to a different group.
+
+    deletewindow
+          Run when a window is deleted.
+
+    quit
+          Run when ratpoison exits.
+
+    restart
+          Run when ratpoison restarts.
+
+
+ - Command: remhook HOOK COMMAND
+     Remove COMMAND from the hook. See `addhook' for a list of
+     available hooks.
+
+ - Command: listhook HOOK
+     List the commands that will be run when HOOK is fired.
+
+
+File: ratpoison.info,  Node: The Status Bar,  Next: Using Other Window Managers,  Prev: Hooks,  Up: Top
+
+The Status Bar
+**************
+
+   ratpoison presents status and output through the status bar. By
+default it is located in the top right corner of the screen.
+
+   This chapter presents commands for manipulating the status bar.
+
+   Since it is the only visible evidence that ratpoison is running (as
+opposed to the invisible evidence including the lack of title bars and
+your favorite desktop background) there are also copious visual
+customizations available for those rainy days.
+
+ - Command: msgwait N
+     Set the bar's timeout in seconds.
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: lastmsg
+     Display the last message.
+
+ - Command: echo TEXT
+     Display TEXT as a message.
+
+ - Command: set inputwidth N
+     Set the width of the input window.
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: set font FONT
+     Set the font. FONT is a font string like `9x15bold'.
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: set framefmt FMT
+     Set the text that appears when the `curframe' command is called.
+     FMT is a format string that accepts the same format characters as
+     `set winfmt'.
+
+ - Command: set fgcolor COLOR
+     Set the foreground color for all text ratpoison displays. COLOR is
+     any valid X11 color.
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: set bgcolor COLOR
+     Set the background color for all text ratpoison displays. COLOR is
+     any valid X11 color.
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: set barpadding X Y
+     Set the horizontal and vertical padding inside the bar.
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: set bargravity G
+     Set the default alignment for the message bar. See the `gravity'
+     command.
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: set barborder N
+     Set the border width for the bar window.
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: set barinpadding N
+     Set whether the bar window appears at the edge of the screen when
+     there is padding - that is, within the "padding" area - or whether
+     it appears at the edge of the window area.  "1" represents the
+     former, "0" the latter.  See the `set padding' and `set
+     bargravity' commands.
+
+     When called with no arguments, the current setting is returned.
+
+
+File: ratpoison.info,  Node: Using Other Window Managers,  Next: Other Commands,  Prev: The Status Bar,  Up: Top
+
+Using Other Window Managers
+***************************
+
+   There are times when a program has been so badly written that it is
+virtually impossible to use under ratpoison. Some authors have tailored
+their programs to certain window management paradigms so aggressively
+that very little can be done. Ratpoison has two commands to help you
+through these difficult times: `tmpwm' and `newwm'.
+
+   These commands should be used sparingly. They were created to allow
+users to understand how a poorly designed program is intended to
+function so they can build a replacement or patch an existing
+alternative's missing functionality.
+
+   According to independant studies, `tmpwm' has been used almost
+exclusively to verify its correct operation - like a vintage sports
+car: always kept in prime condition and never used.
+
+   `tmpwm' and `newwm' are provided for boasting and completeness.
+
+ - Command: tmpwm WM
+     Gives control over to another window manager and regains control
+     once it has terminated. WM is the path to the new window manager.
+     This command is useful when you want to temporarily take a look at
+     another window manager, or program under a different window
+     manager, but you want to come back to ratpoison when you've
+     finished your investigation.
+
+ - Command: newwm WINDOW-MANAGER
+     This is a bad-bad command. It kills ratpoison and revives that
+     ugly rodent! Yuck! Avoid!
+
+
+File: ratpoison.info,  Node: Other Commands,  Next: Input,  Prev: Using Other Window Managers,  Up: Top
+
+Other Commands
+**************
+
+   The following is a list of commands that don't fit in any existing
+chapters.
+
+ - Command: abort
+     This is a pretty useless command. By default, it is bound to `C-t
+     g' and its purpose is to abort the current chain of keystrokes
+     (just like `C-g' in `Emacs').
+
+ - Command: alias NAME COMMAND
+     Allows you to name a ratpoison command something else. For
+     instance, if you frequently open emacs you may want to make an
+     alias called `emacs' that loads emacs. You would do it like this:
+
+          alias emacs exec emacs
+
+     An alias is treated exactly like a colon command in that you can
+     call it from the colon prompt, bind it to a key, and call it
+     non-interactively with `ratpoison -c'.
+
+ - Command: banish
+     Banish the mouse to the lower right corner of the screen.
+
+ - Command: chdir
+     Change the current directory for ratpoison.
+
+ - Command: colon COMMAND
+     Run a ratpoison command.
+
+ - Command: compat
+     Install the now obsolete `def*' commands as aliases to the
+     corresponding `set *' command.
+
+ - Command: set padding LEFT TOP RIGHT BOTTOM
+     Set the padding around the edge of the screen.
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: set waitcursor N
+     Set whether the rat cursor should change into a square when waiting
+     for a key. A non-zero number means change the cursor. Zero means
+     don't change the cursor.
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: escape KEY
+     Set the prefix to KEY. For example `escape C-b' sets the prefix
+     key to <C-b>.
+
+ - Command: exchangedown
+     Exchange the current frame with the one below it.
+
+ - Command: exchangeleft
+     Exchange the current frame with the one to the left of it.
+
+ - Command: exchangeright
+     Exchange the current frame with the one to the right of it.
+
+ - Command: exchangeup
+     Exchange the current frame with the one above it.
+
+ - Command: exec COMMAND
+     Execute a shell command. By default, `C-t !' does this.
+
+ - Command: execa COMMAND
+     Execute a shell command but don't record which frame it was
+     executed from. The client's windows will pop up in whatever frame
+     is current.
+
+ - Command: execf COMMAND FRAME
+     Execute a shell command and choose which frame the client's first
+     window will open in. The client must be netwm compliant for this to
+     work.
+
+ - Command: getenv ENV
+     Display the value of the environment variable, ENV.
+
+ - Command: getsel
+     Return the contents of the X11 selection.
+
+ - Command: help
+     Display a help screen that lists all bound keystrokes.
+
+ - Command: license
+     Display ratpoison's license. By default, this is bound to `C-t V'.
+
+ - Command: meta KEY
+     KEY is an optional argument. When KEY is omitted, send a `C-t' to
+     the current window. Otherwise, send the key described by KEY to
+     the current window. Note that some applications by default ignore
+     the synthetic key that is sent using this command as it is
+     considered a security hole. xterm is one such application.
+
+     For example, if your `Emacs' window is focused,
+
+          meta M-x
+
+     Would cause emacs to prompt for an extended command.
+
+ - Command: prompt PROMPT
+     This command is only useful when called non-interactively.
+     `prompt' prompts the user for input using PROMPT and returns the
+     input.
+
+ - Command: putsel TEXT
+     Make text the X11 selection.
+
+ - Command: quit
+     Quit ratpoison.
+
+ - Command: ratrelwarp X Y
+     Warp the rat to the specified location relative to the current rat
+     position.
+
+ - Command: ratwarp X Y
+     Warp the rat to the specified absolute location.
+
+ - Command: ratclick BUTTON
+     click the rat. BUTTON is either 1, 2, or 3. BUTTON defaults to
+     button 1.
+
+ - Command: rathold STATE BUTTON
+     click the rat button down if STATE is `down' or release the button
+     if STATE is `up'.
+
+ - Command: redisplay
+     Extend the current window to the whole size of its current frame
+     and redisplay it. This can be used to:
+
+        * redisplay normal windows or bring transient windows to the
+          full size of the frame as only normal windows are maximized
+          by ratpoison.
+
+        * fix xterms that didn't catch ratpoison's initial maximize
+          event.
+
+
+ - Command: restart
+     Restart ratpoison.
+
+ - Command: set VAR VALUE
+     Set the value of a ratpoison variable. This command replaces the
+     older `def*' variable get/set style.
+
+     Here is a list of variables that can be set:
+
+        * framesels
+
+        * winliststyle
+
+        * barpadding
+
+        * bgcolor
+
+        * fgcolor
+
+        * winname
+
+        * winfmt
+
+        * waitcursor
+
+        * inputwidth
+
+        * barborder
+
+        * border
+
+        * padding
+
+        * font
+
+        * bargravity
+
+        * maxsizegravity
+
+        * transgravity
+
+        * wingravity
+
+        * maxundos
+
+        * resizeunit
+
+
+ - Command: setenv ENV VALUE
+     Set the environment variable ENV to VALUE
+
+ - Command: source FILE
+     Read a text file containing ratpoison commands.
+
+ - Command: startup_message STATE
+     Turn on or off the startup_message. This is most useful in your
+     .ratpoisonrc file. STATE can be `on' or `off'.
+
+     When called with no arguments, the current setting is returned.
+
+ - Command: swap DESTINATION-FRAME SOURCE-FRAME
+     When called interactively prompt for a frame and swap its window
+     with the window in the current frame. An optional second argument
+     allows swapping of windows between arbitrary frames.
+
+ - Command: time
+     Show current time in the status bar.
+
+ - Command: unalias NAME
+     Remove NAME from the list of defined aliases.
+
+ - Command: unsetenv ENV
+     Clear the value of the environment variable, ENV.
+
+ - Command: verbexec COMMAND
+     Verbosely exec the shell command COMMAND. Raptoison displays a
+     message saying command was executed.
+
+ - Command: version
+     Print ratpoison version.  By default, this is bound to `C-t v'.
+
+ - Command: warp STATE
+     Toggle rat warping. By default ratpoison saves the position of the
+     rat when leaving a window and when the user returns to the window
+     the rat's position is restored. This can be counter-intuitive, so
+     you can toggle it with this command. STATE can be `on' or `off'.
+
+
+File: ratpoison.info,  Node: Input,  Next: Command Line Arguments,  Prev: Other Commands,  Up: Top
+
+Input
+*****
+
+   At various times ratpoison will prompt you for input. Ratpoison
+sports a fully featured line editor. The following table lists the
+keystrokes and actions:
+
+<C-g>
+<escape>
+     abort the command requesting input.
+
+<C-f>
+<right arrow>
+     move forward a character.
+
+<C-b>
+<left arrow>
+     move backward a character.
+
+<M-f>
+     move forward a word.
+
+<M-b>
+     move backward a word.
+
+<C-a>
+<home>
+     move to the beginning of the line.
+
+<C-e>
+<end>
+     move to the end of the line.
+
+<C-d>
+<delete>
+     delete the character at point.
+
+<M-d>
+     delete the word at point.
+
+<backspace>
+     delete the character before the point.
+
+<M-backspace>
+     delete the word before the point.
+
+<C-k>
+     delete from the point to the end of the line.
+
+<C-u>
+     delete from the point to the beginning of the line.
+
+<C-y>
+     Yank the text from the X11 cut buffer.
+
+<C-p>
+<up arrow>
+     Cycle backwards through the history (This command does nothing if
+     ratpoison was configured with the `--disable-history' configure
+     option).
+
+<C-n>
+<down arrow>
+     Cycle forwards through the history (This command does nothing if
+     ratpoison was configured with the `--disable-history' configure
+     option).
+
+<return>
+     submit the line of text.
+
+<tab>
+     complete the text up to the point or if there are several possible
+     completions, cycle through them. This only works in certain
+     contexts. Tab completion will complete a shell command, a window
+     name, a group name, and colon commands in their appropriate context
+     (i.e. when being asked for a window name).
+
+<S-iso-lefttab>
+     This is shift + tab by the way. This does the same as tab, but
+     cycles backwards through the completions.
+
+   All input is stored in the same history list. By default ratpoison
+has a history length of 100 entries. This history is saved to the file
+`~/.ratpoison_history' and is loaded when you start ratpoison. This
+means your history sticks between sessions. This assumes history has
+not been disabled on compilation.
+
+
+File: ratpoison.info,  Node: Command Line Arguments,  Next: Startup file,  Prev: Input,  Up: Top
+
+Command Line Arguments
+**********************
+
+   ratpoison supports command line arguments to request various actions
+when invoking ratpoison.
+
+`-h, --help'
+     Display this help screen
+
+`-v, --version'
+     Display the version
+
+`-d, --display'
+     Specify the X display to connect to.
+
+`-s, --screen'
+     Specify the screen to use. By default ratpoison runs on all
+     screens. You can tell it to use just one with this option.
+
+`-c, --command'
+     Send ratpoison a colon-command. This allows you to control
+     ratpoison from the command-line. with the `-c' option you can
+     script ratpoison using any programming language that can spawn a
+     process. Some commands behave differently when invoked this way.
+     Currently the only commands that behaves differently are the
+     `windows' command and some def* commands. Instead of displaying
+     the window list in a message window, it is printed to stdout. The
+     output can then be captured and used in the ratpoison script. For
+     instance, this could be used to check whether a program is running
+     and if it is switch to its window otherwise launch it.
+
+     It should also be noted that multiple `-c' options can be used.
+
+     to facilitate writing scripts, the `RATPOISON' environment
+     variable is set to the full path of the ratpoison binary.
+
+          $ ratpoison -c split -c split
+
+     Here ratpoison would split the current frame twice.
+
+`-i, --interactive'
+     Force ratpoison to execute commands in interactive mode. This is
+     used in conjunction with the `-c' option.
+
+`-f, --file'
+     Specify an alternate configuration file. *Note Startup file::.
+
+
+File: ratpoison.info,  Node: Startup file,  Next: Command Index,  Prev: Command Line Arguments,  Up: Top
+
+Startup file
+************
+
+   Now you've probably read the web page, and you've no doubt dug up
+some old file I forgot about. You're probably wondering, "say, didn't
+he say there was no configuration file to customize?". Okay, ya got me.
+But let's be honest here: ratpoison is so pure and fast-acting,
+customization is barely worth the extra effort. In the off chance that
+you need to make ratpoison your own, we now support it.
+
+   On startup ratpoison looks for `~/.ratpoisonrc' and runs it through
+the command parser. If `~/.ratpoisonrc' does not exist, ratpoison tries
+`/etc/ratpoisonrc'. This means any command you can bind a key to or run
+at the command prompt (`C-t :') you can execute in this rc file.
+
+   You can also use the `-f' option to specify another startup file,
+allowing you to switch between different configurations (*note Command
+Line Arguments::).
+
+
+File: ratpoison.info,  Node: Command Index,  Prev: Startup file,  Up: Top
+
+Command Index
+*************
+
+* Menu:
+
+* abort:                                 Other Commands.
+* addhook:                               Hooks.
+* alias:                                 Other Commands.
+* banish:                                Other Commands.
+* bind:                                  Key Maps.
+* chdir:                                 Other Commands.
+* clrunmanaged:                          Unmanaged Windows.
+* cnext:                                 Window Classes.
+* colon:                                 Other Commands.
+* compat:                                Other Commands.
+* cother:                                Window Classes.
+* cprev:                                 Window Classes.
+* curframe:                              Frame Navigation Commands.
+* dedicate:                              Dedicated Frames.
+* definekey:                             Key Maps.
+* delete:                                Manipulating Windows.
+* delkmap:                               Key Maps.
+* describekey:                           Key Maps.
+* echo:                                  The Status Bar.
+* escape:                                Other Commands.
+* exchangedown:                          Other Commands.
+* exchangeleft:                          Other Commands.
+* exchangeright:                         Other Commands.
+* exchangeup:                            Other Commands.
+* exec:                                  Other Commands.
+* execa:                                 Other Commands.
+* execf:                                 Other Commands.
+* fdump:                                 Saving and Restoring Frame Sets.
+* focus:                                 Frame Navigation Commands.
+* focusdown:                             Frame Navigation Commands.
+* focuslast:                             Frame Navigation Commands.
+* focusleft:                             Frame Navigation Commands.
+* focusprev:                             Frame Navigation Commands.
+* focusright:                            Frame Navigation Commands.
+* focusup:                               Frame Navigation Commands.
+* frestore:                              Saving and Restoring Frame Sets.
+* fselect:                               Frame Navigation Commands.
+* gdelete:                               Groups.
+* getenv:                                Other Commands.
+* getsel:                                Other Commands.
+* gmerge:                                Groups.
+* gmove:                                 Groups.
+* gnew:                                  Groups.
+* gnewbg:                                Groups.
+* gnext:                                 Groups.
+* gprev:                                 Groups.
+* gravity:                               Manipulating Windows.
+* groups:                                Groups.
+* gselect:                               Groups.
+* help:                                  Other Commands.
+* hsplit:                                Splitting Frames.
+* inext:                                 Window Classes.
+* info:                                  Manipulating Windows.
+* iother:                                Window Classes.
+* iprev:                                 Window Classes.
+* kill:                                  Manipulating Windows.
+* lastmsg:                               The Status Bar.
+* license:                               Other Commands.
+* link:                                  Key Maps.
+* listhook:                              Hooks.
+* meta:                                  Other Commands.
+* msgwait:                               The Status Bar.
+* newkmap:                               Key Maps.
+* newwm:                                 Using Other Window Managers.
+* next:                                  Manipulating Windows.
+* nextscreen:                            Multiple Monitors.
+* number:                                Manipulating Windows.
+* only:                                  Splitting Frames.
+* other:                                 Manipulating Windows.
+* prev:                                  Manipulating Windows.
+* prevscreen:                            Multiple Monitors.
+* prompt:                                Other Commands.
+* putsel:                                Other Commands.
+* quit:                                  Other Commands.
+* ratclick:                              Other Commands.
+* rathold:                               Other Commands.
+* ratrelwarp:                            Other Commands.
+* ratwarp:                               Other Commands.
+* readkey:                               Key Maps.
+* redisplay:                             Other Commands.
+* redo:                                  Saving and Restoring Frame Sets.
+* remhook:                               Hooks.
+* remove:                                Splitting Frames.
+* resize:                                Resizing Frames.
+* restart:                               Other Commands.
+* rudeness:                              Rudeness.
+* sdump:                                 Multiple Monitors.
+* select:                                Manipulating Windows.
+* set <1>:                               Frame Numbering.
+* set:                                   Other Commands.
+* set barborder:                         The Status Bar.
+* set bargravity:                        The Status Bar.
+* set barinpadding:                      The Status Bar.
+* set barpadding:                        The Status Bar.
+* set bgcolor:                           The Status Bar.
+* set border:                            Manipulating Windows.
+* set fgcolor:                           The Status Bar.
+* set font:                              The Status Bar.
+* set framefmt:                          The Status Bar.
+* set infofmt:                           Manipulating Windows.
+* set inputwidth:                        The Status Bar.
+* set maxsizegravity:                    Manipulating Windows.
+* set padding:                           Other Commands.
+* set resizeunit:                        Resizing Frames.
+* set topkmap:                           Key Maps.
+* set transgravity:                      Manipulating Windows.
+* set waitcursor:                        Other Commands.
+* set winfmt:                            Manipulating Windows.
+* set wingravity:                        Manipulating Windows.
+* set winliststyle:                      Manipulating Windows.
+* set winname:                           Manipulating Windows.
+* setenv:                                Other Commands.
+* sfdump:                                Multiple Monitors.
+* sfrestore:                             Multiple Monitors.
+* shrink:                                Resizing Frames.
+* source:                                Other Commands.
+* split:                                 Splitting Frames.
+* sselect:                               Multiple Monitors.
+* startup_message:                       Other Commands.
+* swap:                                  Other Commands.
+* time:                                  Other Commands.
+* title:                                 Manipulating Windows.
+* tmpwm:                                 Using Other Window Managers.
+* unalias:                               Other Commands.
+* unbind:                                Key Maps.
+* undefinekey:                           Key Maps.
+* undo:                                  Saving and Restoring Frame Sets.
+* unmanage:                              Unmanaged Windows.
+* unsetenv:                              Other Commands.
+* verbexec:                              Other Commands.
+* version:                               Other Commands.
+* vsplit:                                Splitting Frames.
+* warp:                                  Other Commands.
+* windows:                               Manipulating Windows.
+
+

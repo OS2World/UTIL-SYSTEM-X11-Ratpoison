@@ -1,0 +1,88 @@
+This is ratpoison.info, produced by makeinfo version 4.3 from
+ratpoison.texi.
+
+INFO-DIR-SECTION X11
+START-INFO-DIR-ENTRY
+* ratpoison: (ratpoison).       Say good-bye to the rodent
+END-INFO-DIR-ENTRY
+
+   This is the ratpoison user manual.
+
+   Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006 Shawn Betts
+
+   The ratpoison user manual is free documentation; permission is
+granted to copy, distribute and/or modify this document under the terms
+of either:
+
+   a) the GNU General Public License as published by the Free Software
+Foundation; either version 2 of the License, or (at your option) any
+later version, or
+
+   b) the GNU Free Documentation License, version 1.2 or any later
+version published by the Free Software Foundation; with no Invariant
+Sections, no Front-Cover Texts, and no Back-Cover Texts.
+
+   The ratpoison manual is distributed in the hope that it will be
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License or GNU Free Documentation License for more
+details.
+
+   A copy of the FDL is included in the section entitled "GNU Free
+Documentation License".  You should have received a copy of the GNU
+General Public License along with this software; see the file COPYING.
+If not, write to the Free Software Foundation, Inc., 51 Franklin St,
+Fifth Floor, Boston, MA 02110-1301, USA.
+
+   If you choose to allow use of your version of this content only
+under the terms of one of the licenses, indicate your decision by
+deleting the notice of the other license. If you do not delete any of
+those, a recipient may use your version of this file unter the terms of
+either the GNU FDL or the GNU GPL.
+
+   The ratpoison manual is distributed in the hope that it will be
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License or GNU Free Documentation License for more
+details.
+
+
+Indirect:
+ratpoison.info-1: 1999
+ratpoison.info-2: 51722
+
+Tag Table:
+(Indirect)
+Node: Top1999
+Node: GNU Free Documentation License3541
+Node: About25951
+Node: Contacting26559
+Node: Concepts27114
+Node: General Use29290
+Node: Windows30375
+Node: Manipulating Windows30606
+Node: Window Classes37016
+Node: Unmanaged Windows38177
+Node: Rudeness38983
+Node: Groups40950
+Node: Frames42954
+Node: Splitting Frames43405
+Node: Resizing Frames46040
+Node: Frame Navigation Commands48080
+Node: Saving and Restoring Frame Sets49285
+Node: Frame Numbering51117
+Node: Dedicated Frames51722
+Node: Multiple Monitors52054
+Node: Keystrokes53846
+Node: Key Maps55121
+Node: Default Key Bindings57445
+Node: Hooks61064
+Node: The Status Bar62678
+Node: Using Other Window Managers65282
+Node: Other Commands66813
+Node: Input73278
+Node: Command Line Arguments75420
+Node: Startup file77169
+Node: Command Index78148
+
+End Tag Table

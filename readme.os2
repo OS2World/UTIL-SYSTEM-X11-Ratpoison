@@ -1,0 +1,117 @@
+                              Ratpoison for OS/2
+                              ==================
+
+Introduction
+------------
+
+   Another in a series of macabre OS/2 ports (the previous program in the row
+   was called  "cadaver"), ratpoison pushes the  concept of mouseless GUIs to
+   the extreme. Users familiar with Emacs or Microsoft Programmer's Workbench
+   for  OS/2  will quickly  find themselves  comfortable with this X11 window
+   manager and its idea of non-overlapping screen frames.
+
+
+Requirements
+------------
+
+   Mandatory components:
+   * OS/2 v 3.0 (XR_W017) or higher
+   * EMX v 0.9d
+   * XFree86/2 with Xinerama (tested on XFree86/2 v 4.5.0)
+
+   Recommended components:
+   * BASH v 2.x for completion support in exec.
+   * A keyboard  having Ctrl in its  home row,  configured for  Dvorak layout
+     (the default keymap relies heavily on Ctrl and Dvorak key positions).
+   * A decent monospaced font for terminal windows.
+
+   Useless components:
+   * Mouse and virtually all compatible devices
+
+
+Setup
+-----
+
+   Copy  ratpoison.exe  to any  location in PATH. Make sure you have the HOME
+   environment variable set to your home directory e.g.
+
+      SET HOME=D:/HOME                  (in CONFIG.SYS)
+
+   The tilde  character (~) will be  used henceforth as  an  abbreviation for
+   %HOME%.
+
+   Modify  your ~/.xinitrc or ~/xinitrc.cmd with a line that reads
+
+      ratpoison
+
+   To customize ratpoison, create a ~/.ratpoison.rc (you can use the supplied
+   sample.ratpoisonrc as a template). Consult the  reference and man page for
+   further guidance.
+
+   The following directories provide some additional resources:
+
+      contrib     Helper/demo scripts
+      doc         Release notes and IPF-formatted reference (for VIEW.EXE)
+      info        ratpoison reference in GNU Info format (for Emacs)
+      man         Manual page for ratpoison(1)
+      src         The source code patch
+
+   ratpoison.ico contains the  ratpoison mascot  downscaled to a PM icon. You
+   can't do anything  meaningful with icons  in ratpoison but  you can assign
+   this icon to the WPS object that launches XFree86/2.
+
+
+OS/2-specific features
+----------------------
+
+   The "exec" facility has  been reworked along  the OS/2  lines. By default,
+   ratpoison will prepend "sh.exe -c " to  all commands it executes. If there
+   is a SHELL environment variable, it will be  used in place of sh.exe (with
+   the " -c " parameter still applied behind the scenes). Example: 
+
+      SET SHELL=c:\os2\os2tools\bash.exe
+
+   To specify a  totally different  shell, use SHELLRUN (it takes  precedence
+   over SHELL in ratpoison but not in other X11 programs), e.g. 
+
+      SET SHELLRUN=c:\os2\cmd.exe /c 
+
+   And for a completely orthodox setup, complement the above line with:
+
+      SET SHELL=c:\os2\cmd.exe 
+
+   The latter line will  make xterm use  the standard shell. Good for getting
+   acquainted with XFree86/2 and ratpoison while  still keeping the DOS-style
+   command interpreter at hand.  ratpoison won't use the SHELL variable  (and
+   dumbfound OS/2's CMD.EXE with "-c") as long  as SHELLRUN is present.  BASH
+   will work for completion in all cases provided that it can be found in the
+   PATH.
+
+
+BUGS
+----
+
+   * Just as with many XFree86/2  environments, it is extremely easy to leave
+     a horde of zombie processes in the background. Watch for what you run in
+     Xterm and in the integrated "exec".
+
+   * Every "exec"  requires a fork(),  a  DosExecPgm()  for  an  intermediary
+     shell, and then still more time to launch the  process. That's to say it
+     is slow.
+
+
+Revision History
+----------------
+
+   30/08/2005  1.3.0       Proof-of-concept build
+   28/11/2005  1.4.0beta2  Implemented an OS/2-friendlier exec
+   19/07/2008  1.4.3       Synced with 1.4.3, added IPF doc and mascot
+
+
+Credits/contacts
+----------------
+
+   ratpoison was originally conceived and developed by Shawn Betts. Visit the
+   homepage of ratpoison at http://www.nongnu.org/ratpoison/.
+
+   The OS/2 port is maintained by Andrew Belov <andrew_belov@newmail.ru>.

@@ -1,0 +1,323 @@
+--- ratpoison-1.4.3.orig/configure.in	Tue Feb 19 18:22:46 2008
++++ ratpoison-1.4.3/configure.in	Sat Jul 19 20:26:16 2008
+@@ -110,7 +110,7 @@
+ dnl Checks for typedefs, structures, and compiler characteristics.
+ 
+ dnl Checks for library functions.
+-AC_CHECK_FUNCS(getopt getopt_long setsid setpgid setpgrp putenv vsnprintf usleep)
++AC_CHECK_FUNCS(getopt getopt_long getsid setsid setpgid setpgrp putenv vsnprintf usleep)
+ 
+ AC_TYPE_SIGNAL
+ 
+--- ratpoison-1.4.3.orig/src/actions.c	Tue Feb 12 00:19:02 2008
++++ ratpoison-1.4.3/src/actions.c	Sat Jul 19 20:17:42 2008
+@@ -28,6 +28,11 @@
+ #include <errno.h>
+ #include <signal.h>
+ 
++#ifdef __EMX__
++#define INCL_BASE
++#include <os2.h>
++#endif
++
+ #include "ratpoison.h"
+ 
+ #ifdef HAVE_LIBXTST
+@@ -212,12 +217,12 @@
+   add_command ("escape",        cmd_escape,     1, 1, 1,
+                "Key: ", arg_KEY);
+   add_command ("exec",          cmd_exec,       1, 1, 1,
+-               "/bin/sh -c ", arg_SHELLCMD);
++               xmalloc_shelldesc(), arg_SHELLCMD);
+   add_command ("execa",		cmd_execa,	1, 1, 1, 
+-	       "/bin/sh -c ", arg_SHELLCMD);
++	       xmalloc_shelldesc(), arg_SHELLCMD);
+   add_command ("execf",		cmd_execf,	2, 2, 2, 
+ 	       "frame to execute in:", arg_FRAME,
+-	       "/bin/sh -c ", arg_SHELLCMD);
++	       xmalloc_shelldesc(), arg_SHELLCMD);
+   add_command ("fdump",         cmd_fdump,      1, 0, 0,
+                "", arg_NUMBER);
+   add_command ("focus",         cmd_next_frame, 0, 0, 0);
+@@ -342,7 +347,7 @@
+   add_command ("unsetenv",      cmd_unsetenv,   1, 1, 1,
+                "Variable: ", arg_STRING);
+   add_command ("verbexec",      cmd_verbexec,   1, 1, 1,
+-               "/bin/sh -c ", arg_SHELLCMD);
++               xmalloc_shelldesc(), arg_SHELLCMD);
+   add_command ("version",       cmd_version,    0, 0, 0);
+   add_command ("vsplit",        cmd_v_split,    1, 0, 0,
+                "Split: ", arg_STRING);
+@@ -2546,6 +2551,31 @@
+   return cmdret_new (RET_SUCCESS, NULL);
+ }
+ 
++#ifdef __EMX__
++void
++shell_os2(char *cmd)
++{
++  char *params;
++  char *e, *p, *tmp_cmd;
++  RESULTCODES rc;
++
++  e = xmalloc_shelldesc();
++  tmp_cmd = xmalloc (strlen(e) + strlen(cmd) + 2);
++  strcpy (tmp_cmd, e);
++  free (e);
++  if ((p = strchr (tmp_cmd, ' ')) == NULL)
++    strcpy (tmp_cmd + strlen(e) + 1, cmd);
++  else
++  {
++    *p = '\0';
++    strcat (p + 1, cmd);
++  }
++  DosExecPgm (NULL, 0, EXEC_SYNC, tmp_cmd, NULL, &rc, tmp_cmd);
++  free (tmp_cmd);
++  exit (0);
++}
++#endif
++
+ int
+ spawn(char *cmd, int raw, rp_frame *frame)
+ {
+@@ -2569,7 +2599,11 @@
+       /* raw means don't run it through sh.  */
+       if (raw)
+         execl (cmd, cmd, NULL);
++#ifdef __EMX__
++      shell_os2(cmd);
++#else
+       execl("/bin/sh", "sh", "-c", cmd, NULL);
++#endif
+       _exit(EXIT_FAILURE);
+     }
+ 
+--- ratpoison-1.4.3.orig/src/config.h.in	Tue Feb 12 00:21:32 2008
++++ ratpoison-1.4.3/src/config.h.in	Sat Jul 19 20:26:38 2008
+@@ -9,6 +9,9 @@
+ /* Define to 1 if you have the `getopt_long' function. */
+ #undef HAVE_GETOPT_LONG
+ 
++/* Define to 1 if you have the `getsid' function. */
++#undef HAVE_GETSID
++
+ /* Define this to enable history */
+ #undef HAVE_HISTORY
+ 
+--- ratpoison-1.4.3.orig/src/events.c	Tue Feb 19 17:48:30 2008
++++ ratpoison-1.4.3/src/events.c	Sat Jul 19 20:19:32 2008
+@@ -918,8 +918,14 @@
+             {
+               /* Report any child that didn't return 0. */
+               if (cur->status != 0)
+-                marked_message_printf (0,0, "/bin/sh -c \"%s\" finished (%d)",
+-                                       cur->cmd, cur->status);
++              {
++                   char *shellhint;
++
++                   shellhint = xmalloc_shelldesc();
++                   marked_message_printf (0,0, "%s\"%s\" finished (%d)",
++                                       shellhint, cur->cmd, cur->status);
++                   free(shellhint);
++              }
+               list_del  (&cur->node);
+               free (cur->cmd);
+               free (cur);
+--- ratpoison-1.4.3.orig/src/globals.c	Sat Oct  6 22:07:32 2007
++++ ratpoison-1.4.3/src/globals.c	Sat Jul 19 20:14:54 2008
+@@ -264,3 +264,76 @@
+   selection.text = NULL;
+   selection.len = 0;
+ }
++
++char *
++xmalloc_shelldesc()
++{
++#ifdef __EMX__
++  char *e, *rc;
++
++  if ((e = getenv ("SHELLRUN")) != NULL)
++  {
++   rc = xmalloc (strlen (e) + 2);
++   strcpy (rc, e);
++   strcat (rc, " ");
++  }
++  else
++  {
++   if((e = getenv ("SHELL")) == NULL)
++     e = "sh.exe";
++   rc = xmalloc (strlen (e) + 5);
++   strcpy (rc, e);
++   strcat (rc, " -c ");
++  }
++  return (rc);
++#else
++  return (xstrdup ("/bin/sh -c "));
++#endif
++}
++
++#ifdef __EMX__
++char *strtok_r (char *s, const char *delim, char **last)
++{
++  char *spanp, *tok;
++  int c, sc;
++
++  if (s == NULL && (s = *last) == NULL)
++    return (NULL);
++
++  /*
++   * Skip (span) leading delimiters (s += strspn(s, delim), sort of).
++   */
++cont:
++  c = *s++;
++  for (spanp = (char *)delim; (sc = *spanp++) != 0;) {
++    if (c == sc)
++      goto cont;
++  }
++
++  if (c == 0) {    /* no non-delimiter characters */
++    *last = NULL;
++    return (NULL);
++  }
++  tok = s - 1;
++
++  /*
++   * Scan token (scan for delimiters: s += strcspn(s, delim), sort of).
++   * Note that delim must have one NUL; we stop if we see that, too.
++   */
++  for (;;) {
++    c = *s++;
++    spanp = (char *)delim;
++    do {
++      if ((sc = *spanp++) == c) {
++        if (c == 0)
++          s = NULL;
++        else
++          s[-1] = '\0';
++        *last = s;
++        return (tok);
++      }
++    } while (sc != 0);
++  }
++  /* NOTREACHED */
++}
++#endif
+--- ratpoison-1.4.3.orig/src/globals.h	Sat Oct  6 22:07:32 2007
++++ ratpoison-1.4.3/src/globals.h	Sat Jul 19 20:14:54 2008
+@@ -159,6 +159,7 @@
+ 
+ void set_rp_window_focus (rp_window *win);
+ void set_window_focus (Window window);
++char *xmalloc_shelldesc();
+ 
+ extern int rp_have_xinerama;
+ extern int xine_screen_count;
+--- ratpoison-1.4.3.orig/src/input.c	Tue Feb 19 17:48:06 2008
++++ ratpoison-1.4.3/src/input.c	Sat Jul 19 20:14:54 2008
+@@ -26,6 +26,9 @@
+ #include <X11/Xlib.h>
+ #include <X11/keysym.h>
+ #include <X11/Xutil.h>
++#ifdef __EMX__
++#include <sys/time.h>
++#endif
+ 
+ #include "ratpoison.h"
+ 
+--- ratpoison-1.4.3.orig/src/main.c	Wed Feb  6 15:09:22 2008
++++ ratpoison-1.4.3/src/main.c	Sat Jul 19 22:18:28 2008
+@@ -411,7 +411,7 @@
+ static void
+ read_startup_files (char *alt_rcfile)
+ {
+-  char *homedir;
++  char *homedir, *etcdir;
+   FILE *fileptr = NULL;
+ 
+   if (alt_rcfile)
+@@ -442,7 +442,17 @@
+               /* we probably don't need to report this, its not an error */
+               PRINT_DEBUG (("ratpoison: could not open %s\n", filename));
+ 
+-              if ((fileptr = fopen ("/etc/ratpoisonrc", "r")) == NULL)
++#ifdef __EMX__
++	      etcdir = getenv("ETC");
++	      if(etcdir == NULL)
++		etcdir = "/etc";
++#else
++	      etcdir = "/etc";
++#endif
++	      free(filename);
++	      filename = xmalloc (strlen(etcdir) + strlen("/ratpoisonrc") + 1);
++	      sprintf (filename, "%s/ratpoisonrc", etcdir);
++              if ((fileptr = fopen (filename, "r")) == NULL)
+                 {
+                   /* neither is this */
+                   PRINT_DEBUG (("ratpoison: could not open /etc/ratpoisonrc\n"));
+@@ -636,6 +646,10 @@
+       exit (EXIT_FAILURE);
+     }
+ 
++#ifdef __EMX__
++  if (display == NULL)
++    display = getenv("DISPLAY");
++#endif
+   if (!(dpy = XOpenDisplay (display)))
+     {
+       fprintf (stderr, "Can't open display\n");
+--- ratpoison-1.4.3.orig/src/messages.h	Sat Oct  6 22:07:32 2007
++++ ratpoison-1.4.3/src/messages.h	Sat Jul 19 20:22:28 2008
+@@ -41,10 +41,8 @@
+ 
+ #define MESSAGE_PROMPT_SWITCH_TO_WINDOW "Switch to window: "
+ #define MESSAGE_PROMPT_NEW_WINDOW_NAME  "Set window's title to: "
+-#define MESSAGE_PROMPT_SHELL_COMMAND    "/bin/sh -c "
+ #define MESSAGE_PROMPT_COMMAND          ":"
+ #define MESSAGE_PROMPT_SWITCH_WM        "Switch to wm: "
+-#define MESSAGE_PROMPT_XTERM_COMMAND    MESSAGE_PROMPT_SHELL_COMMAND TERM_PROG " -e "
+ #define MESSAGE_PROMPT_SWITCH_TO_GROUP  "Switch to group: "
+ #define MESSAGE_PROMPT_SELECT_VAR  "Variable: "
+ #define MESSAGE_PROMPT_VAR_VALUE  "Value: "
+--- ratpoison-1.4.3.orig/src/ratpoison.h	Sat Oct  6 22:07:32 2007
++++ ratpoison-1.4.3/src/ratpoison.h	Sat Jul 19 20:14:54 2008
+@@ -112,4 +112,9 @@
+ void set_extents_of_fontset (XFontSet font);
+ XFontSet load_query_font_set (Display *disp, const char *fontset_name);
+ 
++#ifdef __EMX__
++#define strcasecmp stricmp
++#define usleep(t) DosSleep((t>=1000)?(t/1000):1)
++#endif
++
+ #endif /* ! _RATPOISON_H */
+--- ratpoison-1.4.3.orig/src/window.c	Sat Oct  6 22:07:32 2007
++++ ratpoison-1.4.3/src/window.c	Sat Jul 19 20:40:38 2008
+@@ -124,7 +124,9 @@
+   unsigned long nitems;
+   unsigned long bytes_after;
+   unsigned char *req;
++#ifdef HAVE_GETSID
+   pid_t sid;
++#endif
+ 
+   status = XGetWindowProperty (dpy, w, _net_wm_pid,
+                                0, 0, False, XA_CARDINAL,
+@@ -157,12 +159,18 @@
+   PRINT_DEBUG(("pid: %d\n", pid));
+ 
+   /* The pids will hopefully be in the same session. */
++#ifdef HAVE_GETSID
+   sid = getsid (pid);
++#endif
+   list_for_each_entry (cur, &rp_children, node)
+     {
++#ifdef HAVE_GETSID
+       PRINT_DEBUG(("cur->pid=%d sid=%d\n", cur->pid, getsid (cur->pid)));
+       if (sid == getsid (cur->pid))
+         return cur;
++#else
++      return cur;
++#endif
+     }
+ 
+   return NULL;
